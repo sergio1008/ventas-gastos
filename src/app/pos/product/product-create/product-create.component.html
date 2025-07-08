@@ -1,0 +1,69 @@
+<p-card>
+    <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+</p-card>
+<p-toast />
+<p-card styleClass="my-2">
+    <div class="container">
+        <form id="formProduct" [formGroup]="formProduct" (ngSubmit)="createProduct()">
+            <div class="row">
+                <div class="col-12 col-md-10">
+                    <div class="row">
+                        <div class="col-md-8 ">
+                            <p-floatlabel class="w-100 mb-2" variant="in">
+                                <input class="w-100" pInputText id="name" formControlName="name" autocomplete="off" />
+                                <label for="name">Nombre producto</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class=" col-md-4">
+                            <p-floatlabel class="w-100 mb-2" variant="in">
+                                <input class="w-100" pInputText id="code" formControlName="code" autocomplete="off" />
+                                <label for="code">Código</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-12">
+                            <p-floatlabel class="w-full mb-2" variant="on">
+                                <textarea pTextarea id="description" formControlName="description" rows="5" cols="30"
+                                    style="resize: none" class="h-full w-100"></textarea>
+                                <label for="description">Descripción</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p-floatlabel class="w-100 mb-2" variant="on">
+                                <p-inputnumber formControlName="quantity" inputId="quantity" mode="decimal" />
+                                <label for="quantity">Cantidad</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p-floatlabel class="w-100 mb-2" variant="on">
+                                <p-inputnumber formControlName="price" inputId="price" mode="currency" currency="COP"
+                                    locale="es-CO" />
+                                <label for="price">Precio</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <p-checkbox class="w-100 mb-2" formControlName="favorite" value="true" inputId="favorite" />
+                            <label for="favorite" class="ms-2">Favorito</label>
+                        </div>
+                        <div class="col-12 my-2">
+                            <div class="card flex flex-col gap-6 items-center justify-center p-2">
+                                <div class="mb-3">
+                                    <input class="form-control" id="formFileMultiple" #fu type="file"
+                                        (change)="onUpload($event)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-4">
+                    <div class="d-flex flex-row justify-content-end gap-6">
+                        <p-button class="me-2" severity="danger" label="Cancelar" icon="pi pi-close" outlined
+                            (onClick)="navegar('/pos/productos/listar')" />
+                        <p-button form="formProduct" class="w-full" [disabled]="formProduct.invalid" type="submit"
+                            label="Guardar" icon="pi pi-check" iconPos="right" />
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</p-card>

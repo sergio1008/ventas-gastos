@@ -1,0 +1,38 @@
+<p-toast />
+<p-card>
+    <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+</p-card>
+
+<p-card styleClass="my-2">
+    <div class="container">
+        <form id="formProduct" [formGroup]="formPoint" (ngSubmit)="createPoint()">
+            <div class="row">
+                <div class="col-12 col-md-10">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p-floatlabel class="w-100 mb-2" variant="in">
+                                <input class="w-100" pInputText id="name" formControlName="name" autocomplete="off" />
+                                <label for="name">Nombre punto</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p-checkbox class="w-100 mb-2" formControlName="actived" value="true" inputId="actived" />
+                            <label for="actived" class="ms-2">Activado</label>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-12 mt-4">
+                    <div class="d-flex flex-row justify-content-end gap-6">
+                        <p-button class="me-2" severity="danger" label="Cancelar" icon="pi pi-close" outlined
+                            (onClick)="navegar('/pos/puntos/listar')" />
+                        <p-button form="formProduct" class="w-full" [disabled]="formPoint.invalid" type="submit"
+                            label="Guardar" icon="pi pi-check" iconPos="right" />
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</p-card>

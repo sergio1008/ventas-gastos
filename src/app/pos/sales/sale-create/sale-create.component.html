@@ -1,0 +1,107 @@
+<p-card>
+
+    @if (points | async; as pointData) {
+
+    <p-tabs class="h-100" styleClass="h-100" value={{pointData[0].id!}} scrollable>
+        <p-tablist>
+            @for(tab of pointData ; track tab.id!){
+            <p-tab [value]="tab.id!">
+                {{ tab.name }}
+            </p-tab>
+            }
+        </p-tablist>
+        <p-tabpanels class="h-100 d-inline-block">
+            @for(tab of pointData; track tab.id!){
+            <p-tabpanel [value]="tab.id!">
+                <div class="row">
+                    <div class="col-12 col-md-7 p-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <p-autocomplete inputStyleClass="w-100" styleClass="w-100" panelStyleClass="w-100"
+                                    [suggestions]="[]" (completeMethod)="search($event)" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-2  overflow-auto  p-1" style="max-height: 600px;">
+                            @if (favoriteProducts; as products) {
+
+                            @for (product of products ; track $index) {
+
+                            <div class="col-6 col-lg-4 mt-2 p-1">
+                                <p-card header="" (click)="addItem(tab.id!, product)">
+                                    @if (product.favorite) {
+                                    <div class="d-flex justify-content-end">
+                                        <i class="pi pi-star"></i>
+                                    </div>
+
+                                    }
+
+                                    <p class="my-2 text-center fs-1 text-primary bg-light ">
+                                        {{product.code | uppercase}}
+                                    </p>
+                                    <div class="d-flex justify-content-end">
+                                        <span>{{product.quantity}} und.</span>
+                                    </div>
+                                    <p class="text-break">
+                                        {{product.name}}
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <div class=" fs-3">{{product.price | currency:'USD':'symbol':'1.0-0' }}
+                                        </div>
+
+                                    </div>
+
+                                </p-card>
+                            </div>
+                            }
+                            }
+
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <p-card class="h-100" role="button">
+                            <div class="fs-3 text-center fw-bolder">Pedido</div>
+
+                            @if (orders && orders.length > 0) {
+                                @if ( getOrderDetail(tab.id!) | async ; as order) {
+                                    @for (item of order[0].order; track $index) {
+                                        <div class="d-flex justify-content-between align-items-center border rounded mt-2 p-1">
+                                            <div>
+                                                <p-button icon="pi pi-trash" size="small" severity="danger" />
+                                                {{item.item.name}}
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <p-button icon="pi pi-minus" size="small" severity="secondary" />
+                                                <div class=" mx-2 p-2">{{item.quantity}}</div>
+                                                <p-button icon="pi pi-plus" size="small" severity="secondary" (click)="addItem(tab.id!, item.item)" />
+                                            </div>
+                                        </div>
+
+                                    }
+                                }
+                            }
+
+
+
+                            <div class="d-flex mt-2">
+                                <p-button styleClass="w-100" class="flex-fill m-1" icon="pi pi-shopping-cart"
+                                    size="small" label="Hacer pedido" severity="info" />
+                                <p-button styleClass="w-100" class="flex-fill m-1" icon="pi pi-money-bill" size="small"
+                                    label="Cobrar" />
+                            </div>
+                        </p-card>
+
+                    </div>
+
+                </div>
+            </p-tabpanel>
+            }
+        </p-tabpanels>
+    </p-tabs>
+    }
+
+
+
+
+</p-card>

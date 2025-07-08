@@ -1,0 +1,67 @@
+<p-toast />
+
+<p-card>
+    <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+</p-card>
+
+<p-card styleClass="my-2">
+    <form [formGroup]="formFiltro" (ngSubmit)="search();">
+        <div class="d-flex justify-content-between">
+            <div class="d-flex flex-row justify-content-start">
+                <p-floatlabel variant="on" class="me-4">
+                    <input pInputText id="on_label" formControlName="fullname" autocomplete="off" />
+                    <label for="on_label">Nombre usuario</label>
+                </p-floatlabel>
+            </div>
+            <p-button [disabled]="formFiltro.pristine && formFiltro.dirty && formFiltro.valid" type="submit"
+                icon="pi pi-search" aria-label="Buscar" severity="secondary" iconPos="right" label="Buscar" />
+        </div>
+    </form>
+</p-card>
+<div class="my-2">
+
+</div>
+
+<p-card styleClass="mt-2">
+    <p-toolbar>
+        <ng-template #start>
+            <p-button label="Nuevo" icon="pi pi-plus" class="mr-2" (onClick)="navegar('/pos/usuarios/crear')" />
+        </ng-template>
+
+        <ng-template #end>
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" auto customUpload class="mr-2 inline-block" [chooseButtonProps]="{ severity: 'secondary' }" />
+            <p-button class="ms-2" label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV($event)" /> -->
+        </ng-template>
+    </p-toolbar>
+    <p-table [value]="users" [paginator]="true" [rows]="size" [alwaysShowPaginator]="true" [lazy]="true" [pageLinks]="0"
+        [showFirstLastIcon]="false" [totalRecords]="total" [tableStyle]="{ 'min-width': '50rem' }"
+        [rowsPerPageOptions]="[20]" (onLazyLoad)="getData($event)">
+        <ng-template #header>
+
+            <tr>
+                <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+                @for (item of columns; track $index) {
+                <th>{{item.header}}</th>
+                }
+                <th>Acción</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-user>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="user" />
+                </td>
+                @for (item of columns; track $index) {
+                <td>{{user[item.field]}}</td>
+                }
+                <td>
+                    <p-button icon="pi pi-eye" class="me-2" (onClick)="navegar('/pos/productos/detalle/'+ user.id)"
+                        severity="info" />
+                    <p-button icon="pi pi-pencil" class="me-2" (onClick)="navegar('/pos/productos/editar/'+ user.id)"
+                        severity="secondary" />
+                    <p-button icon="pi pi-trash" class="mr-2" severity="danger" (click)="deleteUser(user);" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
